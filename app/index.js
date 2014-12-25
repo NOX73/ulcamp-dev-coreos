@@ -1,10 +1,8 @@
 var http = require('http');
 
-var id = Math.random();
-
 var server = http.createServer(function (request, response) {
   response.writeHead(200, {"Content-Type": "text/plain"});
-  response.end("My id: " + id);
+  response.end("My ip: " + process.env.COREOS_PRIVATE_IPV4);
 });
 
 server.listen(3000);
