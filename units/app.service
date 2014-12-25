@@ -1,6 +1,7 @@
 [Unit]
 Description=Applicaion
 Requires=app-discovery.service
+Before=app-discovery.service
 
 [Service]
 Restart=always
@@ -14,7 +15,7 @@ ExecStartPre=-/usr/bin/docker pull nox73/ulcamp-dev-coreos
 
 ExecStart=/bin/bash -c "docker run -t --rm \
   -e POSTGRES_HOST_PORT=$(etcdctl get /services/postgres) \
-  -e COREOS_PRIVATE_IPV4=${COREOS_PRIVATE_IPV4}
+  -e COREOS_PRIVATE_IPV4=${COREOS_PRIVATE_IPV4} \
   -p ${COREOS_PRIVATE_IPV4}::3000 \
   --name %p nox73/ulcamp-dev-coreos"
 
