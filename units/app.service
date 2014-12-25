@@ -16,7 +16,7 @@ ExecStart=/bin/bash -c "docker run -t --rm \
   -p ${COREOS_PRIVATE_IPV4}::3000 \
   --name %p nox73/ulcamp-dev-coreos"
 
-ExecStop=/usr/bin/bash -c "docker stop %p"
+ExecStop=/usr/bin/bash -c "docker stop %p && sleep 2"
 
 [X-Fleet]
 Global=true

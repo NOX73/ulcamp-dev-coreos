@@ -15,7 +15,7 @@ ExecStartPre=/bin/bash -c "printf '\n}\n server { listen 80 default_server; loca
 
 ExecStartPre=/usr/bin/docker kill -s HUP nginx
 
-ExecStart=/usr/bin/etcdctl watch /services/app
+ExecStart=/usr/bin/etcdctl watch --recursive /services/app
 
 [X-Fleet]
 MachineOf=nginx.service
