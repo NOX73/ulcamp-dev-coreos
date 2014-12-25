@@ -16,6 +16,16 @@ resource "digitalocean_droplet" "demo-entrypoint" {
     ssh_keys = [581252]
 }
 
+resource "digitalocean_droplet" "demo-db" {
+    image = "coreos-alpha"
+    name = "demo-db"
+    region = "ams3"
+    size = "1gb"
+    private_networking = "true"
+    user_data = "${file("user-data.db")}"
+    ssh_keys = [581252]
+}
+
 resource "digitalocean_droplet" "demo-node" {
     count = 2
     image = "coreos-alpha"

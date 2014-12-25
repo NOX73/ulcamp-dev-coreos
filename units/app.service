@@ -1,0 +1,20 @@
+[Unit]
+Description=Applicaion
+
+[Service]
+Restart=always
+TimeoutStartSec=0
+TimeoutStopSec=10
+EnvironmentFile=/etc/environment
+
+ExecStartPre=-/usr/bin/docker kill %p
+ExecStartPre=-/usr/bin/docker rm %p
+
+ExecStart=/bin/bash -c "docker run -t --rm \
+  -p ${COREOS_PRIVATE_IPV4}::3000 \
+  --name %p nox73/ulcamp-dev-coreos"
+
+ExecStop=/usr/bin/bash -c "docker stop %p"
+
+[X-Fleet]
+MachineMetadata=backend=true

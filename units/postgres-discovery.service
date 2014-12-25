@@ -1,0 +1,15 @@
+[Unit]
+Description=Postgres discovery
+BindsTo=postgres.service
+After=postgres.service
+
+[Service]
+Restart=on-failure
+TimeoutStartSec=0
+TimeoutStopSec=10
+EnvironmentFile=/etc/environment
+
+ExecStart=/bin/bash -c "while true; do etcdctl set --ttl 60 /services/postgres $(docker port postgres 5432); sleep 45; done"
+
+[X-Fleet]
+MachineOf=postgres.service

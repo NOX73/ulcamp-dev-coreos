@@ -9,7 +9,7 @@ coreos:
     cluster-active-size: 1
   fleet:
     public-ip: $private_ipv4
-    metadata: "entrypoint=true"
+    metadata: "db=true"
   units:
     - name: etcd.service
       command: start
