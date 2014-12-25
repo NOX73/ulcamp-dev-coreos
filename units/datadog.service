@@ -1,0 +1,18 @@
+[Unit]
+Description=Datadog monitoring
+
+[Service]
+Restart=on-failure
+TimeoutStartSec=0
+TimeoutStopSec=10
+EnvironmentFile=/etc/environment
+
+ExecStartPre=-/usr/bin/docker kill %p
+ExecStartPre=-/usr/bin/docker rm %p
+
+ExecStart=/bin/bash -c 'docker run --rm --privileged --name %p -h `hostname` -v /var/run/docker.sock:/var/run/docker.sock -v /proc/mounts:/host/proc/mounts:ro -v /sys/fs/cgroup/:/host/sys/fs/cgroup:ro -e API_KEY= datadog/docker-dd-agent'
+
+ExecStop=/usr/bin/bash -c "docker stop %p"
+
+[X-Fleet]
+Global=true

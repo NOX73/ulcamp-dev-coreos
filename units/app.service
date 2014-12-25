@@ -11,10 +11,12 @@ ExecStartPre=-/usr/bin/docker kill %p
 ExecStartPre=-/usr/bin/docker rm %p
 
 ExecStart=/bin/bash -c "docker run -t --rm \
+  -e POSTGRES_HOST_PORT=$(etcdctl get /services/postgres) \
   -p ${COREOS_PRIVATE_IPV4}::3000 \
   --name %p nox73/ulcamp-dev-coreos"
 
 ExecStop=/usr/bin/bash -c "docker stop %p"
 
 [X-Fleet]
-MachineMetadata=backend=true
+Global=true
+MachineMetadata=node=true
