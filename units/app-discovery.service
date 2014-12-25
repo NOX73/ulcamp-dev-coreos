@@ -1,0 +1,15 @@
+[Unit]
+Description=App discovery
+BindsTo=app.service
+
+[Service]
+Restart=on-failure
+TimeoutStartSec=0
+TimeoutStopSec=10
+EnvironmentFile=/etc/environment
+
+ExecStart=/bin/bash -c "while true; do etcdctl set --ttl 60 /services/app/$(docker port app 3000) $(docker port app 3000); sleep 45; done"
+
+[X-Fleet]
+Global=true
+MachineMetadata=node=true

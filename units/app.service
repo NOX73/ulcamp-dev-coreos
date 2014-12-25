@@ -1,5 +1,6 @@
 [Unit]
 Description=Applicaion
+Requires=app-discovery.service
 
 [Service]
 Restart=always

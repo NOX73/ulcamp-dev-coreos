@@ -1,0 +1,21 @@
+[Unit]
+Description=Nginx App config
+
+[Service]
+Restart=always
+TimeoutStartSec=0
+TimeoutStopSec=10
+EnvironmentFile=/etc/environment
+
+ExecStartPre=-/usr/bin/mkdir /home/core/conf.d
+
+ExecStartPre=/bin/bash -c "printf 'upstream app {\n' > /home/core/conf.d/app.conf"
+ExecStartPre=/bin/bash -c "etcdctl ls /services/app | grep -o \"[0-9]*.[0-9]*.[0-9]*.[0-9]*:[0-9]*\" | awk '{ print \"server \" $1 \";\" >> \"/home/core/conf.d/app.conf\" }'"
+ExecStartPre=/bin/bash -c "printf '\n}\n server { listen 80 default_server; location / { proxy_pass http://app; }\n }' >> /home/core/conf.d/app.conf"
+
+ExecStartPre=/usr/bin/docker kill -s HUP nginx
+
+ExecStart=/usr/bin/etcdctl watch /services/app
+
+[X-Fleet]
+MachineOf=nginx.service

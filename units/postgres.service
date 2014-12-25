@@ -1,5 +1,6 @@
 [Unit]
 Description=Postgres
+Requires=postgres-discovery.service
 
 [Service]
 Restart=always
@@ -16,7 +17,7 @@ ExecStart=/usr/bin/docker run -t --rm \
   -v /var/lib/postgresql/data:/var/lib/postgresql/data \
   --name %p postgres:9.3
 
-ExecStop=/usr/bin/bash -c "docker stop %p"
+ExecStop=/usr/bin/bash -c "docker stop %p && sleep 2"
 
 [X-Fleet]
 MachineMetadata=db=true
