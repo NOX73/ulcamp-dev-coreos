@@ -1,0 +1,6 @@
+.vagrant*
+user-data
+**/**/*.log
+*.tfvars
+*.tfstate
+*.tfstate.backup

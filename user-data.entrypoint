@@ -1,0 +1,17 @@
+#cloud-config
+
+coreos:
+  etcd:
+    discovery: https://discovery.etcd.io/1a994228a64c9aa75a2fff772d0f8444
+    addr: $private_ipv4:4001
+    peer-addr: $private_ipv4:7001
+    cluster-remove-delay: 60
+    cluster-active-size: 1
+  fleet:
+    public-ip: $private_ipv4
+    metadata: "entrypoint=true,db=true"
+  units:
+    - name: etcd.service
+      command: start
+    - name: fleet.service
+      command: start
