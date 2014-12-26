@@ -2,7 +2,7 @@
 
 coreos:
   etcd:
-    discovery: https://discovery.etcd.io/1a994228a64c9aa75a2fff772d0f8444
+    discovery: https://discovery.etcd.io/d937b7db99cb94d699cae047f776ace1
     addr: $private_ipv4:4001
     peer-addr: $private_ipv4:7001
     cluster-remove-delay: 60

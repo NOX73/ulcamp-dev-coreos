@@ -4,3 +4,4 @@ user-data
 *.tfvars
 *.tfstate
 *.tfstate.backup
+/app/node_modules/

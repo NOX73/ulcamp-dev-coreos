@@ -1,0 +1,16 @@
+[Unit]
+Description=redis discovery
+BindsTo=redis.service
+
+[Service]
+Restart=on-failure
+TimeoutStartSec=0
+TimeoutStopSec=10
+EnvironmentFile=/etc/environment
+
+ExecStart=/bin/bash -c "while true; do \
+  etcdctl set --ttl 60 /services/redis $(docker port redis 6379); \
+  sleep 45; done"
+
+[X-Fleet]
+MachineOf=redis.service
