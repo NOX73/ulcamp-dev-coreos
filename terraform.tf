@@ -17,6 +17,7 @@ resource "digitalocean_droplet" "demo-entrypoint" {
 }
 
 resource "digitalocean_droplet" "demo-db" {
+    count = 1
     image = "coreos-alpha"
     name = "demo-db"
     region = "ams3"
